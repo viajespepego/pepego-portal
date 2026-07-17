@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#ffc928">
+  <title>Cotizador | Pepe GO!</title>
+  <link rel="icon" type="image/png" href="assets/logo.png">
+  <link rel="apple-touch-icon" href="assets/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="admin-body quote-page">
+  <header class="site-header no-print">
+    <a class="brand" href="admin.html"><img class="logo-pepe" src="assets/logo.png" alt="Pepe GO!"></a>
+    <a class="admin-link" href="admin.html">Volver al panel</a>
+  </header>
+  <main id="quote-app" class="admin-main quote-main" hidden>
+    <div class="dashboard-head no-print">
+      <div><span class="eyebrow">Panel administrativo</span><h1>Cotizador</h1></div>
+      <button id="logout" class="button-secondary" type="button">Cerrar sesión</button>
+    </div>
+    <div class="quote-workspace">
+      <section class="admin-card quote-form-card no-print">
+        <h2>Nueva cotización</h2>
+        <form id="quote-form" class="admin-form">
+          <div class="form-section">Datos del cliente</div>
+          <div class="field-grid">
+            <label>Nombre<input name="clienteNombre" required autocomplete="name"></label>
+            <label>Correo<input name="clienteEmail" type="email" required autocomplete="email"></label>
+            <label>Teléfono<input name="clienteTelefono" type="tel" required autocomplete="tel"></label>
+          </div>
+          <div class="form-section">Datos del viaje</div>
+          <div class="field-grid">
+            <label>Destino<input name="destino" required></label>
+            <label>Hotel<input name="hotel" required></label>
+            <label>Fecha de salida<input name="fechaSalida" type="date" required></label>
+            <label>Fecha de regreso<input name="fechaRegreso" type="date" required></label>
+            <label>Número de personas<input name="personas" type="number" min="1" step="1" required></label>
+            <label>Tipo de habitación<input name="tipoHabitacion" required></label>
+            <label>Plan de alimentos<input name="planAlimentos" required></label>
+          </div>
+          <label>Servicios incluidos<textarea name="serviciosIncluidos" rows="3" required></textarea></label>
+          <label>Observaciones<textarea name="observaciones" rows="3"></textarea></label>
+          <div class="form-section">Precio</div>
+          <div class="field-grid">
+            <label>Precio total<input name="precioTotal" type="number" min="0.01" step="0.01" required></label>
+            <label>Anticipo<input name="anticipo" type="number" min="0" step="0.01" value="0" required></label>
+            <label>Saldo pendiente<input name="saldoPendiente" type="number" min="0" step="0.01" readonly></label>
+            <label>Fecha límite para reservar<input name="fechaLimiteReserva" type="date" required></label>
+            <label>Fecha límite para liquidar<input name="fechaLiquidacion" type="date" required></label>
+          </div>
+          <div class="quote-form-actions">
+            <button id="preview-button" type="button">Vista previa</button>
+            <button id="save-button" class="button-secondary" type="submit">Guardar cotización</button>
+          </div>
+          <p id="quote-message" class="form-message" role="status" aria-live="polite"></p>
+        </form>
+      </section>
+      <section id="quote-preview" class="quote-preview" aria-live="polite">
+        <div class="quote-placeholder no-print"><strong>Tu cotización aparecerá aquí</strong><span>Completa el formulario y selecciona Vista previa.</span></div>
+      </section>
+    </div>
+  </main>
+  <script src="config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/cotizador.js"></script>
+</body>
+</html>

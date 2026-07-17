@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Consulta el estado de tu viaje con Pepe GO!">
+  <meta name="theme-color" content="#ffc928">
+  <title>Pepe GO! | Tu Compa de Viajes</title>
+  <link rel="icon" type="image/png" href="assets/logo.png">
+  <link rel="apple-touch-icon" href="assets/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="index.html"><img src="assets/logo.png" alt="Pepe GO!" class="logo-pepe"></a>
+    <a class="admin-link" href="admin.html">Administración</a>
+  </header>
+  <main>
+    <section class="hero">
+      <div class="hero-copy"><span class="eyebrow">Tu aventura, siempre a la vista</span><h1>Hola, viajero.<br><em>¿A dónde vamos?</em></h1><p>Consulta pagos, documentos y todos los detalles de tu próximo viaje en un solo lugar.</p></div>
+      <div class="search-card"><h2>Consulta tu viaje</h2><p>Ingresa tu folio o el correo con el que reservaste.</p><form id="search-form" novalidate><label for="search-query">Folio o correo electrónico</label><div class="search-row"><input id="search-query" name="query" type="text" placeholder="Ej. GO-001 o correo@ejemplo.com" autocomplete="off" required><button type="submit">Buscar →</button></div><p class="form-message" id="search-message" role="status"></p></form></div>
+    </section>
+    <section id="trip-result" class="trip-result" aria-live="polite" hidden></section>
+    <section class="benefits"><article><span>✈️</span><h3>Todo en orden</h3><p>Consulta tus pagos y saldo actualizado.</p></article><article><span>📄</span><h3>Documentos listos</h3><p>Tu itinerario y vouchers disponibles.</p></article><article><span>💬</span><h3>Estamos contigo</h3><p>Escríbenos cuando necesites ayuda.</p></article></section>
+  </main>
+  <footer><span>© <span id="year"></span> Pepe GO! Tu Compa de Viajes</span><span>Hecho para viajar tranquilo ✈️</span></footer>
+  <script src="config.js"></script><script src="js/api.js"></script><script src="components/trip-card.js"></script><script src="js/app.js"></script>
+</body>
+</html>
