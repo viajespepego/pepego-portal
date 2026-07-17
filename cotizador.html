@@ -15,55 +15,89 @@
 <body class="admin-body quote-page">
   <header class="site-header no-print">
     <a class="brand" href="admin.html"><img class="logo-pepe" src="assets/logo.png" alt="Pepe GO!"></a>
-    <a class="admin-link" href="admin.html">Volver al panel</a>
+    <nav class="admin-header-links"><a class="admin-link" href="admin.html">Panel</a><a class="admin-link" href="index.html">Portal</a></nav>
   </header>
+
   <main id="quote-app" class="admin-main quote-main" hidden>
     <div class="dashboard-head no-print">
       <div><span class="eyebrow">Panel administrativo</span><h1>Cotizador</h1></div>
       <button id="logout" class="button-secondary" type="button">Cerrar sesión</button>
     </div>
+
+    <section class="admin-card quote-library no-print">
+      <div><span class="eyebrow">Cotizaciones guardadas</span><h2>Editar cotización o reserva</h2></div>
+      <div class="quote-library-controls">
+        <select id="saved-quotes" aria-label="Cotizaciones guardadas"><option value="">Selecciona una cotización</option></select>
+        <button id="load-quote" class="button-secondary" type="button">Cargar</button>
+        <button id="new-quote" type="button">Nueva</button>
+      </div>
+    </section>
+
     <div class="quote-workspace">
       <section class="admin-card quote-form-card no-print">
-        <h2>Nueva cotización</h2>
-        <form id="quote-form" class="admin-form">
+        <div class="quote-form-heading"><div><span class="eyebrow" id="editor-mode">Nueva</span><h2 id="editor-title">Cotización</h2></div><span id="conversion-badge" class="small-status" hidden>Reserva creada</span></div>
+        <form id="quote-form" class="admin-form" novalidate>
+          <div class="form-section">Control de la cotización</div>
+          <div class="field-grid">
+            <label>Código de cotización<input name="cotizacionId" readonly placeholder="Se genera al guardar"></label>
+            <label>Código base de reserva<input name="codigoBaseReserva" placeholder="Ej. GO07N015" autocapitalize="characters"></label>
+            <label>Folio del viaje<input name="folioViaje" readonly placeholder="Se genera al aceptar"></label>
+            <label>Estatus<select name="estatus"><option value="Borrador">Borrador</option><option value="Aceptada">Aceptada</option></select></label>
+          </div>
+
           <div class="form-section">Datos del cliente</div>
           <div class="field-grid">
-            <label>Nombre<input name="clienteNombre" required autocomplete="name"></label>
-            <label>Correo<input name="clienteEmail" type="email" required autocomplete="email"></label>
-            <label>Teléfono<input name="clienteTelefono" type="tel" required autocomplete="tel"></label>
+            <label>Nombre<input name="clienteNombre" autocomplete="name"></label>
+            <label>Correo<input name="clienteEmail" type="email" autocomplete="email"></label>
+            <label>Teléfono<input name="clienteTelefono" type="tel" autocomplete="tel"></label>
           </div>
-          <div class="form-section">Datos del viaje</div>
+
+          <div class="form-section">Viajeros</div>
           <div class="field-grid">
-            <label>Destino<input name="destino" required></label>
-            <label>Hotel<input name="hotel" required></label>
-            <label>Fecha de salida<input name="fechaSalida" type="date" required></label>
-            <label>Fecha de regreso<input name="fechaRegreso" type="date" required></label>
-            <label>Número de personas<input name="personas" type="number" min="1" step="1" required></label>
-            <label>Tipo de habitación<input name="tipoHabitacion" required></label>
-            <label>Plan de alimentos<input name="planAlimentos" required></label>
+            <label>Número de adultos<input name="adultos" type="number" min="0" step="1" value="0"></label>
+            <label>Número de menores<input name="menores" type="number" min="0" step="1" value="0"></label>
+            <label>Total de pasajeros<input name="personas" type="number" readonly value="0"></label>
           </div>
-          <label>Servicios incluidos<textarea name="serviciosIncluidos" rows="3" required></textarea></label>
+          <div id="minor-ages" class="dynamic-grid"></div>
+
+          <div class="form-section dynamic-section-head"><span>Habitaciones</span><button id="add-room" class="button-secondary compact-button" type="button">Agregar habitación</button></div>
+          <div id="rooms-list" class="dynamic-list"></div>
+
+          <div class="form-section dynamic-section-head"><span>Destinos del viaje</span><button id="add-destination" class="button-secondary compact-button" type="button">Agregar destino</button></div>
+          <div id="destinations-list" class="dynamic-list"></div>
+
+          <div class="form-section">Servicios y notas</div>
+          <label>Servicios incluidos<textarea name="serviciosIncluidos" rows="3"></textarea></label>
           <label>Observaciones<textarea name="observaciones" rows="3"></textarea></label>
+
+          <div class="form-section dynamic-section-head"><span>Imágenes de la cotización</span><button id="add-image" class="button-secondary compact-button" type="button">Agregar imagen</button></div>
+          <p class="field-help">Puedes agregar hasta 4 URLs públicas de Google Drive u otro servicio.</p>
+          <div id="images-list" class="dynamic-list image-editor-list"></div>
+
           <div class="form-section">Precio</div>
           <div class="field-grid">
-            <label>Precio total<input name="precioTotal" type="number" min="0.01" step="0.01" required></label>
-            <label>Anticipo<input name="anticipo" type="number" min="0" step="0.01" value="0" required></label>
+            <label>Precio total<input name="precioTotal" type="number" min="0" step="0.01"></label>
+            <label>Anticipo<input name="anticipo" type="number" min="0" step="0.01"></label>
             <label>Saldo pendiente<input name="saldoPendiente" type="number" min="0" step="0.01" readonly></label>
-            <label>Fecha límite para reservar<input name="fechaLimiteReserva" type="date" required></label>
-            <label>Fecha límite para liquidar<input name="fechaLiquidacion" type="date" required></label>
+            <label>Fecha límite para reservar<input name="fechaLimiteReserva" type="date"></label>
+            <label>Fecha límite para liquidar<input name="fechaLiquidacion" type="date"></label>
           </div>
-          <div class="quote-form-actions">
+
+          <div class="quote-form-actions quote-form-actions-wide">
             <button id="preview-button" type="button">Vista previa</button>
             <button id="save-button" class="button-secondary" type="submit">Guardar cotización</button>
+            <button id="accept-button" class="accept-button" type="button">Aceptar y crear reserva</button>
           </div>
           <p id="quote-message" class="form-message" role="status" aria-live="polite"></p>
         </form>
       </section>
+
       <section id="quote-preview" class="quote-preview" aria-live="polite">
-        <div class="quote-placeholder no-print"><strong>Tu cotización aparecerá aquí</strong><span>Completa el formulario y selecciona Vista previa.</span></div>
+        <div class="quote-placeholder no-print"><strong>Tu cotización aparecerá aquí</strong><span>Puedes generar una vista previa aunque haya campos vacíos.</span></div>
       </section>
     </div>
   </main>
+
   <script src="config.js"></script>
   <script src="js/api.js"></script>
   <script src="js/cotizador.js"></script>

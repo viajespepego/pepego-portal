@@ -14,6 +14,7 @@ window.PepeGoApi = (() => {
     saveTrip: (data, token) => request('saveTrip', data, token),
     registerPayment: (data, token) => request('registerPayment', data, token),
     saveQuote: (data, token) => request('saveQuote', data, token),
+    acceptQuote: (data, token) => request('acceptQuote', data, token),
     quotes: token => request('quotes', {}, token)
   };
 })();

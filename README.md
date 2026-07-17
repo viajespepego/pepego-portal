@@ -30,6 +30,21 @@ vercel.json        Configuración de caché para Vercel
 
 Las pestañas creadas son: `Clientes`, `Viajes`, `Pagos` y `Cotizaciones`. La pestaña `Cotizaciones` también se crea automáticamente al abrir o guardar desde el cotizador si todavía no existe. Al registrar un pago desde el panel se recalculan automáticamente el total pagado, saldo pendiente y porcentaje de pago.
 
+## Cotizador y conversión a reserva
+
+El cotizador permite guardar borradores incompletos, editarlos y convertirlos en reservas. El código base se normaliza en mayúsculas, sin espacios, y recibe el sufijo `-1`. Antes de crear la reserva, Apps Script comprueba que el folio no pertenezca a otro viaje.
+
+Las habitaciones, destinos, vuelos y traslados se almacenan como JSON. Las cuatro imágenes se guardan como URLs públicas; no se cargan archivos a Vercel. Al editar una cotización ya convertida, se actualizan el cliente, el viaje y el anticipo relacionado sin crear registros duplicados. El portal del viajero muestra los datos sincronizados.
+
+`setupSpreadsheet` es también la función de migración. Puede ejecutarse nuevamente sobre una instalación existente: conserva todas las columnas y filas actuales y agrega al final los encabezados nuevos que falten en `Cotizaciones`, `Viajes` y `Pagos`.
+
+### Actualizar Apps Script
+
+1. Reemplaza el contenido del archivo `Code.gs` del proyecto de Apps Script por [apps-script/Code.gs](apps-script/Code.gs).
+2. Guarda y ejecuta `setupSpreadsheet` una vez. Autoriza los permisos si Google los solicita.
+3. Ve a **Implementar → Administrar implementaciones**, edita la aplicación web y selecciona **Nueva versión**.
+4. Conserva la ejecución como propietario y el mismo nivel de acceso. Al actualizar la implementación existente, la URL `/exec` configurada en `config.js` no cambia.
+
 ## Publicar en GitHub Pages
 
 1. Sube todo el proyecto a tu repositorio de GitHub.
@@ -42,7 +57,9 @@ Las pestañas creadas son: `Clientes`, `Viajes`, `Pagos` y `Cotizaciones`. La pe
 2. No indiques comando de compilación ni directorio de salida: es un sitio estático servido desde la raíz.
 3. Pulsa **Deploy** y conecta tu dominio en **Project Settings → Domains**.
 
-`vercel.json` configura el almacenamiento en caché de CSS, JavaScript, componentes y el logo para producción.
+`vercel.json` conserva caché prolongada para el logo y obliga a revalidar CSS, JavaScript y componentes, de modo que las nuevas versiones del cotizador lleguen a navegadores y celulares sin conservar código anterior.
+
+Para publicar esta versión mediante GitHub y Vercel, sube como mínimo: `cotizador.html`, `admin.html`, `css/styles.css`, `js/cotizador.js`, `js/api.js`, `js/admin.js`, `components/trip-card.js`, `apps-script/Code.gs`, `backend/API.md`, `vercel.json` y `README.md`. Si Vercel está conectado al repositorio, el nuevo commit iniciará el despliegue automáticamente.
 
 ## Resultado
 
@@ -51,4 +68,3 @@ Las pestañas creadas son: `Clientes`, `Viajes`, `Pagos` y `Cotizaciones`. La pe
 - El favicon usa el logo de Pepe GO! desde `assets/logo.png`.
 
 > No coloques la contraseña de administrador en `config.js`; únicamente debe existir como `ADMIN_PASSWORD` en las propiedades privadas de Apps Script.
-> Actualización de despliegue.
