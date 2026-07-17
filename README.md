@@ -51,3 +51,4 @@ Las pestañas creadas son: `Clientes`, `Viajes`, `Pagos` y `Cotizaciones`. La pe
 - El favicon usa el logo de Pepe GO! desde `assets/logo.png`.
 
 > No coloques la contraseña de administrador en `config.js`; únicamente debe existir como `ADMIN_PASSWORD` en las propiedades privadas de Apps Script.
+> Actualización de despliegue.
