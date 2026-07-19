@@ -5,4 +5,5 @@ window.PEPEGO_CONFIG = {
   instagram: '@viajespepego',
   website: 'https://muypronto.com',
   email: 'viajespepego@gmail.com'
-}
+ }
+};
