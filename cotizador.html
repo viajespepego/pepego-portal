@@ -74,11 +74,17 @@
           <p class="field-help">Puedes agregar hasta 4 URLs públicas de Google Drive u otro servicio.</p>
           <div id="images-list" class="dynamic-list image-editor-list"></div>
 
-          <div class="form-section">Precio</div>
-          <div class="field-grid">
-            <label>Precio total<input name="precioTotal" type="number" min="0" step="0.01"></label>
+          <div class="form-section">Inversión</div>
+          <div class="field-grid investment-form-grid">
+            <label>Precio real<input name="precioReal" type="number" min="0" step="0.01"></label>
+            <label>Tipo de descuento<select name="tipoDescuento"><option value="porcentaje">Porcentaje</option><option value="monto">Monto fijo</option></select></label>
+            <label>Descuento aplicado<input name="descuentoAplicado" type="number" min="0" step="0.01"></label>
+            <label>Precio final<input name="precioTotal" type="number" min="0" step="0.01"></label>
             <label>Anticipo<input name="anticipo" type="number" min="0" step="0.01"></label>
             <label>Saldo pendiente<input name="saldoPendiente" type="number" min="0" step="0.01" readonly></label>
+          </div>
+          <div class="price-calculation-note"><span id="price-warning" hidden>El precio final fue ajustado manualmente y no coincide con el cálculo del descuento.</span><button id="use-calculated-price" class="button-secondary compact-button" type="button" hidden>Usar precio calculado</button></div>
+          <div class="field-grid">
             <label>Fecha límite para reservar<input name="fechaLimiteReserva" type="date"></label>
             <label>Fecha límite para liquidar<input name="fechaLiquidacion" type="date"></label>
           </div>
